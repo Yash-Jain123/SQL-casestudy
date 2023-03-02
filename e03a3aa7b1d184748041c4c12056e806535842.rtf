@@ -1,0 +1,167 @@
+
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 # mysql -uroot -p\par
+Enter password:\par
+Welcome to the MariaDB monitor.  Commands end with ; or \\g.\par
+Your MariaDB connection id is 8\par
+Server version: 10.4.22-MariaDB mariadb.org binary distribution\par
+\par
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.\par
+\par
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.\par
+\par
+MariaDB [(none)]> show databases;\par
++--------------------+\par
+| Database           |\par
++--------------------+\par
+| booklib            |\par
+| bookstore          |\par
+| emp                |\par
+| employee           |\par
+| information_schema |\par
+| job                |\par
+| mysql              |\par
+| performance_schema |\par
+| phpmyadmin         |\par
+| shivani            |\par
+| test               |\par
++--------------------+\par
+11 rows in set (0.079 sec)\par
+\par
+MariaDB [(none)]> use bookstore;\par
+Database changed\par
+MariaDB [bookstore]> create table Author(authid int primary key,authname varchar(30),authgender varchar(10),authage int,authaddress varchar(50));\par
+\par
+MariaDB [bookstore]> desc Author;\par
++-------------+-------------+------+-----+---------+-------+\par
+| Field       | Type        | Null | Key | Default | Extra |\par
++-------------+-------------+------+-----+---------+-------+\par
+| authid      | int(11)     | NO   | PRI | NULL    |       |\par
+| authname    | varchar(30) | YES  |     | NULL    |       |\par
+| authgender  | varchar(10) | YES  |     | NULL    |       |\par
+| authage     | int(11)     | YES  |     | NULL    |       |\par
+| authaddress | varchar(50) | YES  |     | NULL    |       |\par
++-------------+-------------+------+-----+---------+-------+\par
+5 rows in set (0.083 sec)\par
+\par
+MariaDB [bookstore]> create table publish(pubid int primary key,pubname varchar(30),publoc varchar(50));\par
+Query OK, 0 rows affected (0.337 sec)\par
+\par
+MariaDB [bookstore]> desc publish;\par
++---------+-------------+------+-----+---------+-------+\par
+| Field   | Type        | Null | Key | Default | Extra |\par
++---------+-------------+------+-----+---------+-------+\par
+| pubid   | int(11)     | NO   | PRI | NULL    |       |\par
+| pubname | varchar(30) | YES  |     | NULL    |       |\par
+| publoc  | varchar(50) | YES  |     | NULL    |       |\par
++---------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.055 sec)\par
+\par
+MariaDB [bookstore]> create table book(bookid int primary key,bookpubdate date,authid int,foreign key(authid) references Author(authid),pubid int,foreign key(pubid) references publish(pubid));\par
+Query OK, 0 rows affected (0.315 sec)\par
+\par
+MariaDB [bookstore]> desc book;\par
++-------------+---------+------+-----+---------+-------+\par
+| Field       | Type    | Null | Key | Default | Extra |\par
++-------------+---------+------+-----+---------+-------+\par
+| bookid      | int(11) | NO   | PRI | NULL    |       |\par
+| bookpubdate | date    | YES  |     | NULL    |       |\par
+| authid      | int(11) | YES  | MUL | NULL    |       |\par
+| pubid       | int(11) | YES  | MUL | NULL    |       |\par
++-------------+---------+------+-----+---------+-------+\par
+4 rows in set (0.019 sec)\par
+\par
+MariaDB [bookstore]> desc Author;\par
++-------------+-------------+------+-----+---------+-------+\par
+| Field       | Type        | Null | Key | Default | Extra |\par
++-------------+-------------+------+-----+---------+-------+\par
+| authid      | int(11)     | NO   | PRI | NULL    |       |\par
+| authname    | varchar(30) | YES  |     | NULL    |       |\par
+| authgender  | varchar(10) | YES  |     | NULL    |       |\par
+| authage     | int(11)     | YES  |     | NULL    |       |\par
+| authaddress | varchar(50) | YES  |     | NULL    |       |\par
++-------------+-------------+------+-----+---------+-------+\par
+5 rows in set (0.451 sec)\par
+\par
+MariaDB [bookstore]> desc publish;\par
++---------+-------------+------+-----+---------+-------+\par
+| Field   | Type        | Null | Key | Default | Extra |\par
++---------+-------------+------+-----+---------+-------+\par
+| pubid   | int(11)     | NO   | PRI | NULL    |       |\par
+| pubname | varchar(30) | YES  |     | NULL    |       |\par
+| publoc  | varchar(50) | YES  |     | NULL    |       |\par
++---------+-------------+------+-----+---------+-------+\par
+3 rows in set (0.025 sec)\par
+\par
+MariaDB [bookstore]> insert into Author values(1,'Raj Sharma','male',20,'santacruz');\par
+Query OK, 1 row affected (0.164 sec)\par
+\par
+MariaDB [bookstore]> select * from Author;\par
++--------+------------+------------+---------+-------------+\par
+| authid | authname   | authgender | authage | authaddress |\par
++--------+------------+------------+---------+-------------+\par
+|      1 | Raj Sharma | male       |      20 | santacruz   |\par
++--------+------------+------------+---------+-------------+\par
+1 row in set (0.001 sec)\par
+\par
+MariaDB [bookstore]> insert into Author values(2,'mira','female',21,'bandra'),(3,'riya','female',25,'dadar'),(4,'rahul','male',30,'malad'),(5,'rohit','male',34,'thane');\par
+Query OK, 4 rows affected (0.082 sec)\par
+Records: 4  Duplicates: 0  Warnings: 0\par
+\par
+MariaDB [bookstore]> select * from Author;\par
++--------+------------+------------+---------+-------------+\par
+| authid | authname   | authgender | authage | authaddress |\par
++--------+------------+------------+---------+-------------+\par
+|      1 | Raj Sharma | male       |      20 | santacruz   |\par
+|      2 | mira       | female     |      21 | bandra      |\par
+|      3 | riya       | female     |      25 | dadar       |\par
+|      4 | rahul      | male       |      30 | malad       |\par
+|      5 | rohit      | male       |      34 | thane       |\par
++--------+------------+------------+---------+-------------+\par
+5 rows in set (0.001 sec)\par
+\par
+MariaDB [bookstore]> insert into publish values(1,'ritik','thane'),(2,'arita','malad'),(3,'mohan','thane'),(4,'siya','dadar'),(5,'rohan','bandra');\par
+Query OK, 5 rows affected (0.067 sec)\par
+Records: 5  Duplicates: 0  Warnings: 0\par
+\par
+MariaDB [bookstore]> select * from publish;\par
++-------+---------+--------+\par
+| pubid | pubname | publoc |\par
++-------+---------+--------+\par
+|     1 | ritik   | thane  |\par
+|     2 | arita   | malad  |\par
+|     3 | mohan   | thane  |\par
+|     4 | siya    | dadar  |\par
+|     5 | rohan   | bandra |\par
++-------+---------+--------+\par
+5 rows in set (0.001 sec)\par
+\par
+MariaDB [bookstore]> desc book;\par
++-------------+---------+------+-----+---------+-------+\par
+| Field       | Type    | Null | Key | Default | Extra |\par
++-------------+---------+------+-----+---------+-------+\par
+| bookid      | int(11) | NO   | PRI | NULL    |       |\par
+| bookpubdate | date    | YES  |     | NULL    |       |\par
+| authid      | int(11) | YES  | MUL | NULL    |       |\par
+| pubid       | int(11) | YES  | MUL | NULL    |       |\par
++-------------+---------+------+-----+---------+-------+\par
+4 rows in set (0.135 sec)\par
+\par
+MariaDB [bookstore]> insert into book values(101,'02-05-11',1,2),(102,'09-06-10',3,5),(103,'08-03-12',5,2),(104,'05-07-09',3,2),(105,'05-09-09',3,1);\par
+Query OK, 5 rows affected (0.084 sec)\par
+Records: 5  Duplicates: 0  Warnings: 0\par
+\par
+MariaDB [bookstore]> select * from book;\par
++--------+-------------+--------+-------+\par
+| bookid | bookpubdate | authid | pubid |\par
++--------+-------------+--------+-------+\par
+|    101 | 2002-05-11  |      1 |     2 |\par
+|    102 | 2009-06-10  |      3 |     5 |\par
+|    103 | 2008-03-12  |      5 |     2 |\par
+|    104 | 2005-07-09  |      3 |     2 |\par
+|    105 | 2005-09-09  |      3 |     1 |\par
++--------+-------------+--------+-------+\par
+5 rows in set (0.001 sec)\par
+}
+ 
